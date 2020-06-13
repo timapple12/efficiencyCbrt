@@ -22,16 +22,16 @@ float cbrt_f(double number){
   float y=1;
   float h=0.0000001;
 
-  while(x<y) {
-    x+=h;
+
     fraction = frexp(number, &exponent);
     shx = exponent % 3;
     if (shx > 0) {
       shx -= 3;
     }
     exponent = (exponent - shx) / 3.0f;
+    printf("%i\n",exponent);
     fraction = ldexp(fraction, shx);
-    fraction = (-0.46946116F * fraction + 1.072302F) * fraction + 0.3812513F;
+    fraction = 2.2789164958172441577749231688981350+(-2.9490015573458797575689646419590799+1.7327200102199398501700376844679917*fraction)*fraction;
     result = ldexp(fraction, exponent);
     /** Використовуємо приближення Ньютона-Рапсона
    * використовуємо змінні типу float для того щоб прискорити виконання алгоритму
@@ -40,7 +40,7 @@ float cbrt_f(double number){
              (float)(1.0 / 3.0) * number * (1 / (result * result));
     result = (float)(2.0 / 3.0) * result +
              (float)(1.0 / 3.0) * number * (1 / (result * result));
-  }
+
   return  n>0?result:-result;
 }
 void errors(){
@@ -71,7 +71,7 @@ void errors(){
       }
       exponent = (exponent - shx) * t;
       fraction = ldexp(fraction, shx);
-      fraction = (-0.46946116F * fraction + 1.072302F) * fraction + 0.3812513F;
+      fraction = 2.2789164958172441577749231688981350+(-2.9490015573458797575689646419590799+1.7327200102199398501700376844679917*fraction)*fraction;
       result = ldexp(fraction, exponent);
       float rez3 = (result / cbrt(x)) - 1;
       result = tr * result + t * x * (1 / (result * result));
@@ -105,13 +105,13 @@ void errors(){
     }
     z += 0.01f;
 
-    printf("(%.20f;%f)\n", x, y);
-    printf("min3 = %.20f\n", min3);
-    printf("max3 = %.20f\n\n", max3);
-    printf("min2 = %.20f\n", min2);
-    printf("max2 = %.20f\n\n", max2);*/
+    //printf("(%.20f;%f)\n", x, y);
+   // printf("%.20f\n", min3);
+   // printf("%.20f\n", max3);
+    //printf("%.20f\n", min2);
+    //printf("%.20f\n", max2);
 
-    printf("min = %.20f\n", min);
+   // printf("%.20f\n", min);
     printf("%.20f\n", max);
 
     min=INFINITY;
@@ -148,9 +148,10 @@ float cbr(float numb){
 }
 int main() {
   float start_time =  clock();
-  printf("%.50f\n",cbrt_f(10));
+  printf("%.50f\n",cbrt_f(15));
   float end_time = clock();
   float search_time = end_time - start_time;
   printf("time = %.40f",search_time/(1000));
+
   return 0;
 }
